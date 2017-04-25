@@ -86,4 +86,4 @@ should change content of this file according to your needs.
 This script should not change original Excel file. Of course it is always good to have and work on copy :)
 
 ## Changes to script
-You can do whatever you want & need with this script. I will be more than happy if it will be useful for you and you will make it script better.
+You can do whatever you want & need with this script. I will be more than happy if it will be useful for you and you will make it better.
