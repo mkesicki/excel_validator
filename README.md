@@ -29,6 +29,9 @@ All necessary python libraries are listed in  [requirements.txt](../blob/master/
 ```
 
 #Example usage:
+
+Usage for *example/excel.xlsx* file
+ 
 ```commandline
 
 /PATH/excel_validator>python excel_validator.py "example/example.yml" /PATH/excel.xlsx "Example" "/tmp" --errors=true
