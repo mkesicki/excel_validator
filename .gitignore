@@ -1,2 +1,4 @@
 /excel_validator.iml
 *.pyc
+dist/*
+env/*
