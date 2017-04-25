@@ -81,7 +81,7 @@ In Windows you can Drag & Drop Excel file on *validate.bat* script and it should
 should change content of this file according to your needs.
 
 ## NOTE
-This script should not change orginal Excel file. Of course it is always good to have and work on copy :)
+This script should not change original Excel file. Of course it is always good to have and work on copy :)
 
 ## Changes to script
 You can do whatever you want & need with this script. I will be more than happy if it will be useful for you and you will make it script better.
