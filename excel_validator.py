@@ -1,7 +1,6 @@
 #!/usr/bin/python -u
 # -*- coding: UTF-8 -*-
 
-import pprint
 import yaml
 import sys
 import os.path

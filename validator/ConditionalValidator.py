@@ -1,5 +1,4 @@
 import BaseValidator
-import pprint
 class ConditionalValidator(BaseValidator.BaseValidator):
 
     operator = None #should be a lambda expression which return boolean variable
