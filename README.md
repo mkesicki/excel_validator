@@ -7,7 +7,7 @@ It was created in my *free* time to improve process of parsing excel files in my
  
 ## Requirements
  
-All necessary python libraries are listed in  [requirements.txt](../master/requirements.txt)
+All necessary python libraries are listed in [requirements.txt](../master/requirements.txt)
  
 ## Script parameters
  
