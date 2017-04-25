@@ -5,11 +5,11 @@ can be extended. Validation rules are stored in *YAML* files.
 
 It was created in my *free* time to improve process of parsing excel files in my company. 
  
-# Requirements
+## Requirements
  
 All necessary python libraries are listed in  [requirements.txt](../master/requirements.txt)
  
-# Script parameters
+## Script parameters
  
  ```commandline
  $ python excel_validator.py  -h
@@ -28,7 +28,7 @@ All necessary python libraries are listed in  [requirements.txt](../master/requi
    --errors errors  Print errors messages in cells marked as invalid
 ```
 
-# Example usage
+## Example usage
 
 usage for *example/excel.xlsx* file
  
@@ -74,14 +74,14 @@ Script will create new Excel file with marked errors (red background for invalid
 If ```--errors=true``` option is set, script will also print validator message in invalid cells.
 Example file with errors *errors_2017-04-25_1493102119_excel.xlsx* is attached to repository in example directory.  
   
-# Windows user bonus
+## Windows user bonus
 
 [validate.bat](../master/validate.bat) contains example usage (same as in this documentation) of script.
 In Windows you can Drag & Drop Excel file on *validate.bat* script and it should execute validation. Of course you 
 should change content of this file according to your needs.
 
-# NOTE
+## NOTE
 This script should not change orginal Excel file. Of course it is always good to have and work on copy :)
 
-# Changes to script
+## Changes to script
 You can do whatever you want & need with this script. I will be more than happy if it will be useful for you and you will make it script better.
