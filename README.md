@@ -6,6 +6,8 @@ can be extended. Validation rules are stored in *YAML* files.
 It was created in my *free* time to improve process of parsing excel files in my company. 
  
 ## Requirements
+
+Python 2.7
  
 All necessary python libraries are listed in [requirements.txt](../master/requirements.txt)
  
