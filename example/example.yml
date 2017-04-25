@@ -1,0 +1,92 @@
+header: "ID" #if set script will find this "header row" and will start parsing from next line
+excludes: ["L"] #these columns will be not validated
+
+#range: ["A","D"]
+#this option set range of columns which should be process for validation.
+#In this case form A (included) to D (included)
+#range and excludes options can be used together
+
+validators:
+
+    default:
+        - NotBlank:
+            message: Value can not be blank
+
+    #default validator is used for not excluded columns for which no other validation rule is set
+
+    columns:
+        A:
+          - NotBlank:
+              message: Value can not be blank
+
+          - Regex:
+              pattern: "\\d{3}\\-\\d{3}\\-\\d{3}"
+              message: Value do not match pattern
+
+        B:
+           - Length:
+              max: 3
+              maxMessage: Value is too long
+
+        C:
+            - Length:
+                min: 3
+                minMessage: Value is too short
+
+        D:
+            - Length:
+                min: 3
+                minMessage: Value is too short
+
+        E:
+            - Choice:
+                choices: ["male", "female"]
+                message: Gender should be male, female
+                caseSensitive: False #set choice validator as case insensitive (by default is case sensitive)
+
+        F:
+            - Country:
+                message: "Value is not correct country"
+                trim: true
+
+                #check if value is valid country
+                #@see https://pypi.python.org/pypi/pycountry/
+        G:
+            - Email:
+                message: "Field should be correct email address"
+                trim: true
+
+                 #trim option (true/false) is valid for all validators
+                 #if set: value will be trimmed (remove trailing and leading white characters) before validation
+                 #default: False
+
+        H:
+            - Type:
+                type: integer
+                message: "Value should be integer"
+                trim: true
+
+            - Conditional:
+                message: "Quantity can not be higher than in stock"
+                fieldB: "J"
+                operator: "lambda h, j: (False if (h > j) else True)"
+                trim: true
+
+                #contiditional validator check lambda expression (operator) fo selected column and fieldB column
+                #expression has to return boolean value
+        I:
+            - Type:
+                type: integer
+                message: "Value should be integer"
+                trim: true
+
+        J:
+            - Type:
+                type: integer
+                message: "Value should be integer"
+                trim: true
+
+        K:
+            - ExcelDate:
+                message: "Value should be a date value"
+                trim: true
