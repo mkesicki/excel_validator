@@ -1,15 +1,15 @@
 # Excel Validator 
 
-This is simple Python script to validate content in Excel files. It contains most common validator. Of course this
-can be extended. Validation rules for Excel file are stored in *YAML* files.
+This is simple Python script to validate content in Excel files. It contains most common validators. Of course this
+can be extended. Validation rules are stored in *YAML* files.
 
 It was created in my *free* time to improve process of parsing excel files in my company. 
  
 # Requirements
  
-All necessary python libraries are listed in  [requirements.txt](../blob/master/requirements.txt)
+All necessary python libraries are listed in  [requirements.txt](../master/requirements.txt)
  
-# Usage
+# Script parameters
  
  ```commandline
  $ python excel_validator.py  -h
@@ -28,9 +28,9 @@ All necessary python libraries are listed in  [requirements.txt](../blob/master/
    --errors errors  Print errors messages in cells marked as invalid
 ```
 
-#Example usage:
+# Example usage
 
-Usage for *example/excel.xlsx* file
+usage for *example/excel.xlsx* file
  
 ```commandline
 
@@ -70,17 +70,18 @@ Validation errors store in: [[/tmp/errors_2017-04-25_1493102119_excel.xlsx]]
 Press any key to continue . . .
 ```
 
-Script will create new Excel file with marked errors (red background for invalid cells)
-If *--errors=true* option is set, script will also print validator message in invalid cells
-Example file with error *errors_2017-04-25_1493102119_excel.xlsx* is attached to repository in example directory.  
+Script will create new Excel file with marked errors (red background for invalid cells).
+If ```--errors=true``` option is set, script will also print validator message in invalid cells.
+Example file with errors *errors_2017-04-25_1493102119_excel.xlsx* is attached to repository in example directory.  
   
-#Windows user bonus
-[validate.bat](../blob/master/validate.bat) contains example usage (same as this documentation) of this script.
+# Windows user bonus
+
+[validate.bat](../master/validate.bat) contains example usage (same as in this documentation) of script.
 In Windows you can Drag & Drop Excel file on *validate.bat* script and it should execute validation. Of course you 
 should change content of this file according to your needs.
 
-#NOTE
+# NOTE
 This script should not change orginal Excel file. Of course it is always good to have and work on copy :)
 
-#Changes to script
-You can do whatever you want & need with this script. I will be more than happy if it will be useful for you and you will make this script better.
+# Changes to script
+You can do whatever you want & need with this script. I will be more than happy if it will be useful for you and you will make it script better.
