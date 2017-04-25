@@ -12,9 +12,20 @@ from openpyxl.reader.excel import load_workbook
 from openpyxl.styles import fills, PatternFill
 from openpyxl.utils import column_index_from_string, get_column_letter
 
-# from validator import *
-
 from validator import *
+
+# import for pyinstaller
+from validator import BaseValidator
+from validator import ChoiceValidator
+from validator import ConditionalValidator
+from validator import CountryValidator
+from validator import DateTimeValidator
+from validator import EmailValidator
+from validator import ExcelDateValidator
+from validator import LengthValidator
+from validator import NotBlankValidator
+from validator import RegexValidator
+from validator import TypeValidator
 
 def isValid(settings, value, coordinate, errors, value2 = None):
     #validator list
