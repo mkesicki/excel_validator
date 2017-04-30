@@ -226,7 +226,11 @@ if __name__ == '__main__':
     if settings == False:
         sys.exit("Incorrect config file " + args.config)
 
-    results = validate(settings, args.file, args.sheetName, args.tmpDir, args.errors)
+    try:
+        results = validate(settings, args.file, args.sheetName, args.tmpDir, args.errors)
+    except Exception, e:
+        print "ERROR:" + e.message
+        exit(1)
 
     if results != True:
         if results:
