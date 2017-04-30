@@ -1,19 +1,19 @@
 #!/usr/bin/python -u
 # -*- coding: UTF-8 -*-
 
-import yaml
-import sys
-import os.path
-import time
 import argparse
-from progress.bar import Bar
-from openpyxl.reader.excel import load_workbook
-from openpyxl.styles import fills, PatternFill
-from openpyxl.utils import column_index_from_string, get_column_letter
+import os.path
+import sys
+import time
 
-# from validator import *
+import yaml
+from openpyxl.reader.excel import load_workbook
+from openpyxl.styles import PatternFill
+from openpyxl.utils import column_index_from_string, get_column_letter
+from progress.bar import Bar
 
 from validator import *
+
 
 def isValid(settings, value, coordinate, errors, value2 = None):
     #validator list
@@ -54,7 +54,11 @@ def setSettings(config):
     excludes = []
 
     print "Get validation config " + config
-    stream = file(config, 'r')
+    try:
+        stream = file(config, 'r')
+    except IOError, e:
+        print e
+        exit(1)
     config = yaml.load(stream)
 
     if 'validators' in config and 'columns' in config.get('validators'):
@@ -132,7 +136,11 @@ def markErrors(errors, excelFile, sheetName, tmpDir, printErrors = False):
     #save error excel file
     wb.properties.creator = creator
     print "[[Save file: " + newFile + "]]"
-    wb.save(newFile)
+    try:
+        wb.save(newFile)
+    except Exception, e:
+        print e
+        exit(1)
 
     return newFile
 
@@ -229,7 +237,7 @@ if __name__ == '__main__':
     try:
         results = validate(settings, args.file, args.sheetName, args.tmpDir, args.errors)
     except Exception, e:
-        print "ERROR:" + e.message
+        print e
         exit(1)
 
     if results != True:
