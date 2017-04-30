@@ -3,3 +3,5 @@
 dist/*
 env/*
 /build
+.idea/*
+excel_validator.spec
