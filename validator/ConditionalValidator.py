@@ -2,13 +2,13 @@ import BaseValidator
 class ConditionalValidator(BaseValidator.BaseValidator):
 
     operator = None #should be a lambda expression which return boolean variable
-    fieldB = None
     message = "This value is not valid"
 
     def validate(self, fieldA, fieldB):
 
         fieldA = super(ConditionalValidator, self).validate(fieldA)
         fieldB = super(ConditionalValidator, self).validate(fieldB)
+
         return self.operator(fieldA, fieldB)
 
     def __init__(self, params):

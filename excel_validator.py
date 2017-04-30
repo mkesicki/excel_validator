@@ -32,17 +32,17 @@ def isValid(settings, value, coordinate, errors, value2 = None):
     }
 
     violations = []
-    for data in settings:
-        for name  in data:
-            validator = classmap[name](data[name])
+    type = settings.keys()[0]
+    data = settings.values()[0]
+    validator = classmap[type](data)
 
-            if name != 'Conditional':
-                result = validator.validate(value)
-            else:
-                result = validator.validate(value, value2)
+    if type != 'Conditional':
+        result = validator.validate(value)
+    else:
+        result = validator.validate(value, value2)
 
-            if (result == False):
-                violations.append(validator.getMessage())
+    if (result == False):
+        violations.append(validator.getMessage())
 
     if len(violations) > 0:
         errors.append((coordinate, violations))
@@ -184,13 +184,14 @@ def validate(settings, excelFile, sheetName, tmpDir, printErrors = False):
             coordinates = "%s%d" % (column, rowCounter)
 
             if column in settings['validators']:
-                name = settings['validators'][column][0].keys()[0]
-                if name != 'Conditional':
-                    isValid(settings['validators'][column], value, coordinates, errors)
-                else:
-                    fieldB = settings['validators'][column][0]['Conditional']['fieldB']
-                    value2 = ws.cell(fieldB + str(rowCounter)).value
-                    isValid(settings['validators'][column], value, coordinates, errors, value2)
+                for type in settings['validators'][column]:
+                    name = type.keys()[0]
+                    if name != 'Conditional':
+                        isValid(type, value, coordinates, errors)
+                    else:
+                        fieldB = type.values()[0]['fieldB']
+                        value2 = ws.cell(fieldB + str(rowCounter)).value
+                        isValid(type, value, coordinates, errors, value2)
 
             elif settings['defaultValidator'] != None:
                 isValid(settings['defaultValidator'], value, coordinates, errors)
