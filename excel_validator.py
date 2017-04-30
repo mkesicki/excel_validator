@@ -6,7 +6,6 @@ import sys
 import os.path
 import time
 import argparse
-import re
 from progress.bar import Bar
 from openpyxl.reader.excel import load_workbook
 from openpyxl.styles import fills, PatternFill
@@ -58,13 +57,13 @@ def setSettings(config):
     stream = file(config, 'r')
     config = yaml.load(stream)
 
-    if 'validators' in config and 'columns' in config.get('validators') :
+    if 'validators' in config and 'columns' in config.get('validators'):
         settings['validators'] = config.get('validators').get('columns')
     else:
         return False
 
     if 'default' in config.get('validators') :
-        settings['defaultValidator'] = config.get('validators').get('default')
+        settings['defaultValidator'] = config.get('validators').get('default')[0]
     else:
         settings['defaultValidator'] = None
 
