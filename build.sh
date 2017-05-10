@@ -22,7 +22,16 @@ usage() {
 prepare_env() {
   echo -e "${green}[*] PREPARING PYTHON2 VIRTUAL ENVIRONMENT${endColor}"
   if [ ! -d env ] ; then
-    virtualenv env
+    if [ -f /usr/bin/virtualenv ] ; then
+      virtualenv env
+    else
+      if [ -f /usr/bin/virtualenv2 ] ; then
+        virtualenv2 env
+      else
+        echo "${yellow}[!] NO VIRTUALENV DETECTED, PLEASE INSTALL IT!"
+        exit 1
+      fi
+    fi
   fi
   source env/bin/activate
   pip install -r requirements.txt
