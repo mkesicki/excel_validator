@@ -237,8 +237,7 @@ if __name__ == '__main__':
     try:
         results = validate(settings, args.file, args.sheetName, args.tmpDir, args.errors)
     except Exception, e:
-        print e
-        exit(1)
+        sys.exit("Error occured: " + e.message)
 
     if results != True:
         if results:

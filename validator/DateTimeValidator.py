@@ -16,8 +16,11 @@ class DateTimeValidator(BaseValidator.BaseValidator):
         value = super(DateTimeValidator, self).validate(value)
 
         if type(value) is datetime:
-            value = value.strftime(self.format)
-
+            try:
+                value = value.strftime(self.format)
+            except ValueError:
+                
+                return False
         try:
             if type(value) is unicode or type(value) is str:
                 datetime.strptime(value, self.format)
