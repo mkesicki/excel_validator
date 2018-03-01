@@ -127,7 +127,7 @@ def markErrors(errors, excelFile, sheetName, tmpDir, printErrors = False):
         progressBar.next()
 
         print "Broken Excel cell: " + error[0]
-        cell =  ws.cell(error[0])
+        cell = ws[error[0]]
         if printErrors:
             cell.value = ','.join(error[1])
         cell.fill = redFill
@@ -197,7 +197,7 @@ def validate(settings, excelFile, sheetName, tmpDir, printErrors = False):
                         isValid(type, value, coordinates, errors)
                     else:
                         fieldB = type.values()[0]['fieldB']
-                        value2 = ws.cell(fieldB + str(rowCounter)).value
+                        value2 = ws[fieldB + str(rowCounter)].value
                         isValid(type, value, coordinates, errors, value2)
 
             elif settings['defaultValidator'] != None:
