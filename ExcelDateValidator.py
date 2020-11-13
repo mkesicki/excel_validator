@@ -6,7 +6,7 @@ class ExcelDateValidator(DateTimeValidator.DateTimeValidator):
 
     def validate(self, value):
 
-       if isinstance(value, long):
+       if isinstance(value, int):
            value = from_excel(value)
 
        return DateTimeValidator.DateTimeValidator.validate(self, value);

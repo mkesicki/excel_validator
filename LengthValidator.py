@@ -16,7 +16,7 @@ class LengthValidator(BaseValidator.BaseValidator):
 
         value = super(LengthValidator, self).validate(value)
 
-        if type(value) is not unicode:
+        if type(value) is not str:
             value = (str)(value)
 
         if self.min is not None and len(value) < self.min:

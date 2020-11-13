@@ -1,6 +1,5 @@
 import BaseValidator
 from validate_email import validate_email
-
 class EmailValidator(BaseValidator.BaseValidator):
 
     message = "Value is not correct email address"
@@ -12,7 +11,7 @@ class EmailValidator(BaseValidator.BaseValidator):
             return True
 
         value = super(EmailValidator, self).validate(value)
-        if type(value) is unicode or type(value) is str:
+        if type(value) is str or type(value) is str:
             return  validate_email(value)
 
         return False

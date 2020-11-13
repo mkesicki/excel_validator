@@ -22,7 +22,7 @@ class DateTimeValidator(BaseValidator.BaseValidator):
                 
                 return False
         try:
-            if type(value) is unicode or type(value) is str:
+            if type(value) is str or type(value) is str:
                 datetime.strptime(value, self.format)
 
                 return True
