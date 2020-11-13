@@ -1,6 +1,6 @@
-import BaseValidator
+from validator.BaseValidator import BaseValidator
 from validate_email import validate_email
-class EmailValidator(BaseValidator.BaseValidator):
+class EmailValidator(BaseValidator):
 
     message = "Value is not correct email address"
 

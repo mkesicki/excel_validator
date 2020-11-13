@@ -1,6 +1,6 @@
-import BaseValidator
+from validator.BaseValidator import BaseValidator
 
-class TypeValidator(BaseValidator.BaseValidator):
+class TypeValidator(BaseValidator):
 
     message = "Wrong type"
     type = ""

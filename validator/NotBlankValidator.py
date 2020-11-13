@@ -1,7 +1,8 @@
-import BaseValidator
+from  validator.BaseValidator import BaseValidator
 import re
 
-class NotBlankValidator(BaseValidator.BaseValidator):
+
+class NotBlankValidator(BaseValidator):
 
     required = True
     message = "Cell can not be blank"

@@ -1,7 +1,7 @@
-import BaseValidator
+from validator.BaseValidator import BaseValidator
 import pycountry
 
-class CountryValidator(BaseValidator.BaseValidator):
+class CountryValidator(BaseValidator):
 
     message = "This value is not correct country name"
     countries = pycountry.countries

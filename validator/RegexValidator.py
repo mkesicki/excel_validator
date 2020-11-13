@@ -1,6 +1,6 @@
-import BaseValidator
+from validator.BaseValidator import BaseValidator
 import re
-class RegexValidator(BaseValidator.BaseValidator):
+class RegexValidator(BaseValidator):
 
     pattern = None
     message = "This value do not match pattern"

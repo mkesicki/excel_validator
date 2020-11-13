@@ -1,10 +1,3 @@
-#pip install openpyxl
-#pip install progress
-#pip install PyYAML
-#pip install validate-email
-#pip install pycountry
-#pip uninstall validator
-#pip install progress
 #!/usr/bin/python -u
 # -*- coding: UTF-8 -*-
 import argparse
@@ -16,16 +9,7 @@ from openpyxl.reader.excel import load_workbook
 from openpyxl.styles import PatternFill
 from openpyxl.utils import column_index_from_string, get_column_letter
 from progress.bar import Bar
-import NotBlankValidator
-import TypeValidator
-import RegexValidator
-import EmailValidator
-import ChoiceValidator
-import DateTimeValidator
-import ExcelDateValidator
-import CountryValidator
-import ConditionalValidator
-import LengthValidator
+from validator import *
 
 def isValid(type, value, coordinate, errors, value2 = None):
     #validator list

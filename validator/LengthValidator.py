@@ -1,6 +1,6 @@
-import BaseValidator
+from validator.BaseValidator import BaseValidator
 
-class LengthValidator(BaseValidator.BaseValidator):
+class LengthValidator(BaseValidator):
 
     min = None
     max = None

@@ -1,7 +1,7 @@
-import BaseValidator
+from validator.BaseValidator import BaseValidator
 from datetime import datetime
 
-class DateTimeValidator(BaseValidator.BaseValidator):
+class DateTimeValidator(BaseValidator):
 
     message = "This value is not valid datetime"
     format = "%Y-%m-%d"
