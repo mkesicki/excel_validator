@@ -28,6 +28,8 @@ validators:
               max: 3
               maxMessage: Value is too long
 
+           - NotBlank:
+              message: Value can not be blank
         C:
             - Length:
                 min: 3

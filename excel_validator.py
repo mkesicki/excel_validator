@@ -12,7 +12,10 @@ from progress.bar import Bar
 from validator import *
 
 def isValid(type, value, coordinate, errors, value2 = None):
-    #validator list
+    '''Takes the validation type assigned to the cell, 
+    cell value,  coordinates of the cell, errors of previous validation break list
+    '''
+    #Assigning each class to the validation type 
     classmap = {
         'NotBlank': NotBlankValidator.NotBlankValidator,
         'Type': TypeValidator.TypeValidator,
@@ -26,17 +29,20 @@ def isValid(type, value, coordinate, errors, value2 = None):
         'Conditional': ConditionalValidator.ConditionalValidator
     }
     violations = []
-    #name = type.keys()[0]
-    #data = type.values()[0]
+    #name is the validation type name (NotBlank, Regex, Length ,.... etc)
+    #data is the value assigned by the user to be validated ( 3 chars , regex pattern , ... etc)
     name = list(type.keys())[0]
     data =list(type.values())[0]
     validator = classmap[name](data)
+
+    #conditional validator will take two arguments to evaluate
 
     if name != 'Conditional':
         result = validator.validate(value)
     else:
         result = validator.validate(value, value2)
 
+    #If the cell value breakes the validation tule , append violations list
     if (result == False):
         violations.append(validator.getMessage())
 
@@ -44,6 +50,7 @@ def isValid(type, value, coordinate, errors, value2 = None):
         errors.append((coordinate, violations))
 
     #return result != False 
+    #result is the output of each validation for each cell 
     if (result == False):
         return False   
     else:
@@ -51,8 +58,12 @@ def isValid(type, value, coordinate, errors, value2 = None):
     
 
 def setSettings(config):
-
+    '''function takes the config yaml file and converts it to dictionary
+    '''
     settings = {}
+
+    #excludes are the columns that we won't validate
+
     excludes = []
 
     print ("Get validation config " + config)
@@ -63,6 +74,7 @@ def setSettings(config):
         exit(1)
     config = yaml.safe_load(stream)
 
+    #Make sure that the yaml file follows the rules
     if 'validators' in config and 'columns' in config.get('validators'):
         settings['validators'] = config.get('validators').get('columns')
     else:
@@ -92,9 +104,14 @@ def setSettings(config):
 
     return settings
 
-def markErrors(errors, excelFile, sheetName, tmpDir, printErrors = False):
 
+def markErrors(errors, excelFile, sheetName, tmpDir, printErrors = False):
+    ''' Function takes the error lists (coordinates,violations) , excel file , sheet name
+    output directory
+    '''
     progressBar = Bar('Processing', max = len(errors))
+
+    #Checking size of the file 
 
     if os.path.getsize(excelFile) > 10485760:
         print ("Log broken cells")
@@ -120,6 +137,8 @@ def markErrors(errors, excelFile, sheetName, tmpDir, printErrors = False):
 
     creator = wb.properties.creator
     ws = wb.get_sheet_by_name(sheetName)
+
+    #fill the error values with red pattern 
 
     redFill = PatternFill(start_color='FFFF0000',
         end_color = 'FFFF0000',
@@ -147,6 +166,9 @@ def markErrors(errors, excelFile, sheetName, tmpDir, printErrors = False):
     return newFile
 
 def validate(settings, excelFile, sheetName, tmpDir, printErrors = False):
+    '''the main function of valitations, takes settings dictionary (validations)
+    and returns the validation result
+    '''
     print ("Validate Excel Sheet " + sheetName)
 
     errors = []
@@ -182,11 +204,11 @@ def validate(settings, excelFile, sheetName, tmpDir, printErrors = False):
                 errors.append((coordinates, ValueError))
 
             #find header (first) row
-            #if header exits " ID " awl cell fe elheader
+            #if the code founded the first header "ID", then it is the header row
             if settings['header'] != True:
-                # if value bysawy awl cell fe el header 
+
                 if value == settings['header']:
-                    #Saffar el Header
+                    #Replace the header with true incase it meets a value of "ID" downside
                     settings['header'] = True
                 # skip el row
                 break
@@ -197,7 +219,9 @@ def validate(settings, excelFile, sheetName, tmpDir, printErrors = False):
 
             column = get_column_letter(columnCounter)
             coordinates = "%s%d" % (column, rowCounter)
-            ## column = A Coordinate = A2, for example
+    
+
+            ## column:A Coordinate:A2, for example
 
             if column in settings['validators']:
                 for type in settings['validators'][column]:
@@ -223,7 +247,8 @@ def validate(settings, excelFile, sheetName, tmpDir, printErrors = False):
     return True
 
 def isEmpty(row):
-
+    ''' function to get if the row is empty or not
+    '''
     for cell in row:
         if cell.value:
             return False
@@ -250,9 +275,9 @@ if __name__ == '__main__':
     except Exception as e:
         sys.exit("Error occured: " + str(e))
 
-#result = true >> elfile saleem w validated
-#result != True and not equal None "Hatly esm el result file"
-#results !=True and equal None " File Kbeer "
+# if result = true that means file is originaly true and all values are correct
+# if result != True and not equal None, get result file name
+# if results !=True and equal None that means File is too large , Exit
     if results != True:
         if results:
             sys.exit("Validation errors store in: [[" + results + "]]")
@@ -260,6 +285,3 @@ if __name__ == '__main__':
             sys.exit("Invalid file is too big to generate annotated Excel file")
 
     sys.exit(0)
-
-
-
