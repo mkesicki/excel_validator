@@ -56,7 +56,6 @@ def isValid(type, value, coordinate, errors, value2 = None):
     else:
         return True
     
-
 def setSettings(config):
     '''function takes the config yaml file and converts it to dictionary
     '''
@@ -103,7 +102,6 @@ def setSettings(config):
         settings['header'] = True
 
     return settings
-
 
 def markErrors(errors, excelFile, sheetName, tmpDir, printErrors = False):
     ''' Function takes the error lists (coordinates,violations) , excel file , sheet name
@@ -219,7 +217,6 @@ def validate(settings, excelFile, sheetName, tmpDir, printErrors = False):
 
             column = get_column_letter(columnCounter)
             coordinates = "%s%d" % (column, rowCounter)
-    
 
             ## column:A Coordinate:A2, for example
 
