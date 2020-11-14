@@ -1,8 +1,5 @@
 # Excel Validator
 
-
-
-
 Excel Validator is used to validate different constraints of excel column through a Validation rules  stored in *YAML* files.
 
 constraints to be checked : 
@@ -17,10 +14,7 @@ constraints to be checked :
     -   NotBlank Validator
     -   Regex Validator
     -   Type Validator
-
-
 ## Requirements
-
 
 1. Python 3
 2. All necessary python libraries are listed in [requirements.txt](../master/requirements.txt)
@@ -90,8 +84,3 @@ Press any key to continue . . .
 [validate.bat](../master/validate.bat) contains example usage (same as in this documentation) of script.
 In Windows you can Drag & Drop Excel file on *validate.bat* script and it should execute validation. Of course you 
 should change content of this file according to your needs.
-
-
-   
-
-
