@@ -28,6 +28,8 @@ validators:
               max: 3
               maxMessage: Value is too long
 
+           - NotBlank:
+              message: Value can not be blank
         C:
             - Length:
                 min: 3
@@ -69,7 +71,7 @@ validators:
             - Conditional:
                 message: "Quantity can not be higher than in stock"
                 fieldB: "J"
-                operator: "lambda h, j: (False if (h > j) else True)"
+                operator: "lambda h, j: (False if (h != None and j != None and h > j) else True)"
                 trim: true
 
                 #contiditional validator check lambda expression (operator) fo selected column and fieldB column

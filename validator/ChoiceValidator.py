@@ -1,6 +1,6 @@
-import BaseValidator
+from validator.BaseValidator import BaseValidator
 
-class ChoiceValidator(BaseValidator.BaseValidator):
+class ChoiceValidator(BaseValidator):
 
     message = "This value is not valid choice"
     choices = []

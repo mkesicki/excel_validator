@@ -1,6 +1,6 @@
-import BaseValidator
+from validator.BaseValidator import BaseValidator
 import re
-class RegexValidator(BaseValidator.BaseValidator):
+class RegexValidator(BaseValidator):
 
     pattern = None
     message = "This value do not match pattern"
@@ -12,7 +12,7 @@ class RegexValidator(BaseValidator.BaseValidator):
             return True
 
         value = super(RegexValidator, self).validate(value)
-        if type(value) is not unicode:
+        if type(value) is not str:
             value = (str)(value)
 
         if re.match(self.pattern, value):

@@ -1,5 +1,6 @@
-import BaseValidator
-class ConditionalValidator(BaseValidator.BaseValidator):
+from validator.BaseValidator import BaseValidator
+
+class ConditionalValidator(BaseValidator):
 
     operator = None #should be a lambda expression which return boolean variable
     message = "This value is not valid"
