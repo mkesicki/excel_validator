@@ -11,7 +11,7 @@ class BaseValidator:
 
     @abstractmethod
     def validate(self, value):
-        if self.trim is True and (type(value) is str or type(value) is str):
+        if self.trim is True and type(value) is str:
             return value.strip()
 
         return value

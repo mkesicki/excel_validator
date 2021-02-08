@@ -11,7 +11,7 @@ class EmailValidator(BaseValidator):
             return True
 
         value = super(EmailValidator, self).validate(value)
-        if type(value) is str or type(value) is str:
+        if type(value) is str:
             return  validate_email(value)
 
         return False
