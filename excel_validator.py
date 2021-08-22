@@ -5,7 +5,6 @@ import os.path
 import sys
 import time
 import yaml
-import pprint
 from openpyxl.reader.excel import load_workbook
 from openpyxl.styles import PatternFill
 from openpyxl.utils import column_index_from_string, get_column_letter
@@ -104,17 +103,13 @@ def setSettings(config):
 
     return settings
 
-def markErrors(errors, excelFile, sheetName, tmpDir, printErrors = False):
+def markErrors(errors, excelFile, sheetName, tmpDir, printErrors = False, noSizeLimit = False):
     ''' Function takes the error lists (coordinates,violations) , excel file , sheet name
     output directory
     '''
     progressBar = Bar('Processing', max = len(errors))
 
-
-
-    pprint.pprint(printErrors)
-
-    if printErrors == 'True':
+    if printErrors.lower() == 'true':
         print ("Log broken cells")
         for error in errors:
             progressBar.next()
@@ -126,7 +121,7 @@ def markErrors(errors, excelFile, sheetName, tmpDir, printErrors = False):
     #Checking size of the file
     isFileTooBig = os.path.getsize(excelFile) > 10485760
 
-    if isFileTooBig is True:
+    if isFileTooBig is True and noSizeLimit.lower() != 'true':
         return -1
 
     #open Excel file
@@ -161,6 +156,7 @@ def markErrors(errors, excelFile, sheetName, tmpDir, printErrors = False):
     #save error excel file
     wb.properties.creator = creator
     print ("[[Save file: " + newFile + "]]")
+
     try:
         wb.save(newFile)
     except Exception as e:
@@ -169,7 +165,7 @@ def markErrors(errors, excelFile, sheetName, tmpDir, printErrors = False):
 
     return newFile
 
-def validate(settings, excelFile, sheetName, tmpDir, printErrors = False):
+def validate(settings, excelFile, sheetName, tmpDir, printErrors = False, noSizeLimit = False):
     '''the main function of valitations, takes settings dictionary (validations)
     and returns the validation result
     '''
@@ -245,7 +241,7 @@ def validate(settings, excelFile, sheetName, tmpDir, printErrors = False):
 
     print ("Found %d error(s)" % len(errors))
     if (len(errors) > 0):
-        return markErrors(errors, excelFile, sheetName, tmpDir, printErrors)
+        return markErrors(errors, excelFile, sheetName, tmpDir, printErrors, noSizeLimit)
 
     return True
 
@@ -265,7 +261,7 @@ if __name__ == '__main__':
     parser.add_argument('file', metavar = 'file', help = 'Path to excel sheet file')
     parser.add_argument('sheetName', metavar = 'sheetName', help = 'Excel Sheet Name')
     parser.add_argument('tmpDir', metavar = 'tmpDir', help = 'Temporary directory path')
-    parser.add_argument('--errors', metavar = 'errors', help = 'Print errors messages in cells marked as invalid')
+    parser.add_argument('--errors', metavar = 'errors', help = 'Print errors messages without generating excel file with errors')
     parser.add_argument('--no-file-size-limit', metavar = 'size', help = 'Switch off file size limit. Use with care')
     args = parser.parse_args()
 
@@ -275,18 +271,18 @@ if __name__ == '__main__':
         sys.exit("Incorrect config file " + args.config)
 
     try:
-        results = validate(settings, args.file, args.sheetName, args.tmpDir, args.errors)
+        results = validate(settings, args.file, args.sheetName, args.tmpDir, args.errors, args.no_file_size_limit)
     except Exception as e:
         sys.exit("Error occured: " + str(e))
 
-# if result = True that means file is originaly true and all values are correct
-# if result != True and not equal None, get result file name
-# if results == -1 File is too large , Exit
+    # if result = True that means file is originaly true and all values are correct
+    # if result != True and not equal None, get result file name
+    # if results == -1 File is too large , Exit
 
     if results != True:
         if results and results != -1:
             sys.exit("Validation errors store in: [[" + results + "]]")
         elif results == -1:
-            sys.exit("Invalid file is too big to generate annotated Excel file")
+            sys.exit("File is too big to generate annotated Excel file")
 
     sys.exit(0)

@@ -33,8 +33,9 @@ constraints to be checked :
    tmpDir           Temporary directory path
 
  optional arguments:
-   -h, --help       show this help message and exit
-   --errors errors  Print errors messages without generating excel file with errors
+   -h, --help           Print help description
+   --errors             Print errors messages without generating excel file with errors
+   --no-file-size-limit Switch off file size limit. Use with care
 ```
 
 ## Example usage
