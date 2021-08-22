@@ -5,6 +5,7 @@ import os.path
 import sys
 import time
 import yaml
+import pprint
 from openpyxl.reader.excel import load_workbook
 from openpyxl.styles import PatternFill
 from openpyxl.utils import column_index_from_string, get_column_letter
@@ -12,10 +13,10 @@ from progress.bar import Bar
 from validator import *
 
 def isValid(type, value, coordinate, errors, value2 = None):
-    '''Takes the validation type assigned to the cell, 
+    '''Takes the validation type assigned to the cell,
     cell value,  coordinates of the cell, errors of previous validation break list
     '''
-    #Assigning each class to the validation type 
+    #Assigning each class to the validation type
     classmap = {
         'NotBlank': NotBlankValidator.NotBlankValidator,
         'Type': TypeValidator.TypeValidator,
@@ -49,13 +50,13 @@ def isValid(type, value, coordinate, errors, value2 = None):
     if len(violations) > 0:
         errors.append((coordinate, violations))
 
-    #return result != False 
-    #result is the output of each validation for each cell 
+    #return result != False
+    #result is the output of each validation for each cell
     if (result == False):
-        return False   
+        return False
     else:
         return True
-    
+
 def setSettings(config):
     '''function takes the config yaml file and converts it to dictionary
     '''
@@ -91,7 +92,7 @@ def setSettings(config):
     else:
         settings['excludes'] = []
 
-    if 'range' in config: 
+    if 'range' in config:
         settings['range'] = config.get('range')[0] + "1:" + config.get('range')[1]
     else:
         settings['range'] = None
@@ -109,20 +110,24 @@ def markErrors(errors, excelFile, sheetName, tmpDir, printErrors = False):
     '''
     progressBar = Bar('Processing', max = len(errors))
 
-    #Checking size of the file 
 
-    if os.path.getsize(excelFile) > 10485760:
+
+    pprint.pprint(printErrors)
+
+    if printErrors == 'True':
         print ("Log broken cells")
         for error in errors:
             progressBar.next()
+            print (" Broken Excel cell: " + error[0] + " [ "+ ','.join(error[1]) + " ]")
+        progressBar.finish()
 
-            if printErrors.lower() == "true":
-                print ("Broken Excel cell: " + error[0] + " [ "+ ','.join(error[1]) + " ]")
-            else:
-                print ("Broken Excel cell: " + error[0])
-
-        progressBar.finish();
         return
+
+    #Checking size of the file
+    isFileTooBig = os.path.getsize(excelFile) > 10485760
+
+    if isFileTooBig is True:
+        return -1
 
     #open Excel file
     newFile = os.path.join(tmpDir , "errors_" + time.strftime("%Y-%m-%d") + "_" + str(int(time.time())) + "_" + os.path.basename(excelFile))
@@ -136,7 +141,7 @@ def markErrors(errors, excelFile, sheetName, tmpDir, printErrors = False):
     creator = wb.properties.creator
     ws = wb.get_sheet_by_name(sheetName)
 
-    #fill the error values with red pattern 
+    #fill the error values with red pattern
 
     redFill = PatternFill(start_color='FFFF0000',
         end_color = 'FFFF0000',
@@ -145,13 +150,14 @@ def markErrors(errors, excelFile, sheetName, tmpDir, printErrors = False):
     for error in errors:
         progressBar.next()
 
-        print ("Broken Excel cell: " + error[0])
+        print (" Broken Excel cell: " + error[0])
         cell = ws[error[0]]
         if printErrors:
             cell.value = ','.join(error[1])
         cell.fill = redFill
 
     progressBar.finish()
+
     #save error excel file
     wb.properties.creator = creator
     print ("[[Save file: " + newFile + "]]")
@@ -260,6 +266,7 @@ if __name__ == '__main__':
     parser.add_argument('sheetName', metavar = 'sheetName', help = 'Excel Sheet Name')
     parser.add_argument('tmpDir', metavar = 'tmpDir', help = 'Temporary directory path')
     parser.add_argument('--errors', metavar = 'errors', help = 'Print errors messages in cells marked as invalid')
+    parser.add_argument('--no-file-size-limit', metavar = 'size', help = 'Switch off file size limit. Use with care')
     args = parser.parse_args()
 
     settings = setSettings(args.config)
@@ -272,13 +279,14 @@ if __name__ == '__main__':
     except Exception as e:
         sys.exit("Error occured: " + str(e))
 
-# if result = true that means file is originaly true and all values are correct
+# if result = True that means file is originaly true and all values are correct
 # if result != True and not equal None, get result file name
-# if results !=True and equal None that means File is too large , Exit
+# if results == -1 File is too large , Exit
+
     if results != True:
-        if results:
+        if results and results != -1:
             sys.exit("Validation errors store in: [[" + results + "]]")
-        else:
+        elif results == -1:
             sys.exit("Invalid file is too big to generate annotated Excel file")
 
     sys.exit(0)
