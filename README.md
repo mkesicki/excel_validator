@@ -2,8 +2,8 @@
 
 Excel Validator is used to validate different constraints of excel column through a Validation rules  stored in *YAML* files.
 
-constraints to be checked : 
-    -   Base Validator 
+constraints to be checked :
+    -   Base Validator
     -   Choice Validator
     -   Condition Validator
     -   Country Validator
@@ -23,24 +23,25 @@ constraints to be checked :
  ```commandline
  $ python excel_validator.py  -h
  usage: excel_validator.py [-h] [--errors errors] config file sheetName tmpDir
- 
+
  Mark validation errors in Excel sheet.
- 
+
  positional arguments:
    config           Path to YAML config file
    file             Path to excel sheet file
    sheetName        Excel Sheet Name
    tmpDir           Temporary directory path
- 
+
  optional arguments:
-   -h, --help       show this help message and exit
-   --errors errors  Print errors messages in cells marked as invalid
+   -h, --help           Print help description
+   --errors             Print errors messages without generating excel file with errors
+   --no-file-size-limit Switch off file size limit. Use with care
 ```
 
 ## Example usage
 
 usage for *example/excel.xlsx* file
- 
+
 ```commandline
 
 /PATH/excel_validator>python excel_validator.py "example/example.yml" /PATH/excel.xlsx "Example" "/tmp" --errors=true
@@ -82,5 +83,5 @@ Press any key to continue . . .
 ## Windows user bonus
 
 [validate.bat](../master/validate.bat) contains example usage (same as in this documentation) of script.
-In Windows you can Drag & Drop Excel file on *validate.bat* script and it should execute validation. Of course you 
+In Windows you can Drag & Drop Excel file on *validate.bat* script and it should execute validation. Of course you
 should change content of this file according to your needs.
