@@ -31,7 +31,7 @@ RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/inst
 # ENV PATH="${PATH}:/root/.poetry/bin"
 ENV PATH="${PATH}:$HOME/.local/bin"
 
-#  copy necessary files
+# copy necessary files
 COPY . .
 
 # configure poetry & install dependencies
