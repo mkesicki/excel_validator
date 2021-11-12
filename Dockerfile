@@ -28,7 +28,6 @@ RUN set -ex \
 RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/install-poetry.py | python - \
     && export PATH="$HOME/.local/bin:$PATH"
 
-# ENV PATH="${PATH}:/root/.poetry/bin"
 ENV PATH="${PATH}:$HOME/.local/bin"
 
 # copy necessary files
@@ -37,7 +36,6 @@ COPY . .
 # configure poetry & install dependencies
 RUN $HOME/.local/bin/poetry config virtualenvs.create false \
   && $HOME/.local/bin/poetry install --no-interaction --no-ansi
-
 
 # remove unecessary .git directory
 RUN rm -rf .git
