@@ -109,7 +109,7 @@ def markErrors(errors, excelFile, sheetName, tmpDir, printErrors = False, noSize
     '''
     progressBar = Bar('Processing', max = len(errors))
 
-    if printErrors.lower() == 'true':
+    if printErrors is not None and printErrors.lower() == 'true':
         print ("Log broken cells")
         for error in errors:
             progressBar.next()
